@@ -2,9 +2,20 @@
 
 //// Submit Button
 
-document.querySelector('#loan-form').addEventListener('submit', calculateResults);
+document.querySelector('#loan-form').addEventListener('submit',function(e){
+    // Hide Results
+    document.querySelector('#results').style.display = 'none';
 
-function calculateResults(e){
+
+    //Show Loader
+    document.querySelector('#loading').style.display = 'block';
+
+    setTimeout(calculateResults, 2000);
+
+    e.preventDefault();
+});
+
+function calculateResults(){
     //console.log(e.target);
 
     // UI Variables
@@ -29,11 +40,22 @@ function calculateResults(e){
         monthlyPymt.value = monthly.toFixed(2);
         totalPymnt.value = (monthly * calculatedPymt).toFixed(2);
         totalInt.value = ((monthly * calculatedPymt) - principal).toFixed(2);
+
+        //Show Results
+        document.querySelector('#results').style.display = 'block';
+
+        //Hide Spinner
+        document.querySelector('#loading').style.display = 'none';
+
     } else {
         showError('Please check your input');
+
+        //Hide Spinner
+        document.querySelector('#loading').style.display = 'none';
+
     };
 
-    e.preventDefault();
+    //e.preventDefault();
 }
 
 function showError(error){
@@ -58,3 +80,4 @@ function showError(error){
 function clearError(){
     document.querySelector('.alert').remove();
 }
+
